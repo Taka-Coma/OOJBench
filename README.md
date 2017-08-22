@@ -24,19 +24,34 @@
 
 ## Component
 - conf.json: configuration file for the generator
+	- Parameters: N, k, l, s, t, z
+		- N: T:he number of tuples in the joined results.
+		- k: The number of attributes on R.
+		- l: The number of attributes on S.
+		- s: The number of attributes for order-oriented join on R.
+		- t: The number of attributes for order-oriented join on S.
+		- z: The number tuples per join key value.
+		- dbname: The name of database.
+
 	- The following is a sample.
 - dataGen.py: data generator
 	- Generates
-		- Two CSV files (R.csv and S.csv) corresponding with relations R and S.
+		- Three CSV files (R.csv, S.csv and E.csv) corresponding with relations R, S, and E.
 			- All attributes are integer.
-		- Two SQL files (R.sql and S.sql) for create table statements.
-	- Base join keys are the last columns of R and S.
-		- Herein, equi-join is assumed.
-	- Order-oriented join keys are k-s-1 (resp. l-t-1) to k-1 (resp. l-1) columns in R (resp. S).
-		- k, l: the numbers of attributes of R and S
-		- s, t: the numbers of attrobutes for order-oriented join on R and S
-	- Other attributes are filled by random values.
+		- Three SQL files (R.sql, S.sql and E.sql) for create table statements.
 - bulkLoad2Postgres.py: data loader to PostgreSQL database
+	- Execute SQL files (R.sql, S.sql and E.sql).
+	- Execute COPY command for loading CSV files into corresponding tables.
+
+
+### Specifications of tables
+- Base join keys are the last columns of R and S.
+	- Herein, equi-join is assumed.
+- Order-oriented join keys are k-s-1 (resp. l-t-1) to k-1 (resp. l-1) columns in R (resp. S).
+	- k, l: the numbers of attributes of R and S
+	- s, t: the numbers of attrobutes for order-oriented join on R and S
+- Other attributes are filled by random values.
+
 
 
 ### Sample conf.json
