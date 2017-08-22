@@ -24,8 +24,8 @@
 
 ## Component
 - conf.json: configuration file for the generator
-	- Parameters: N, k, l, s, t, z
-		- N: T:he number of tuples in the joined results.
+	- Parameters: N, k, l, s, t, z, dbname
+		- N: The number of tuples in the joined results.
 		- k: The number of attributes on R.
 		- l: The number of attributes on S.
 		- s: The number of attributes for order-oriented join on R.
