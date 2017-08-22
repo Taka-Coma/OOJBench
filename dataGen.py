@@ -6,43 +6,42 @@ import numpy as np
 
 class dataGen:
     def __init__(self):
-        with open('./conf.json', 'r') as r:
-            self.config = json.load(r)
-            self.N = self.config['N']['value']
-            self.k = self.config['k']['value']
-            self.l = self.config['l']['value']
-            self.s = self.config['s']['value']
-            self.t = self.config['t']['value']
-            self.z = self.config['z']['value']
 
+        ### Load configuration file
+        with open('./conf.json', 'r') as r:
+            config = json.load(r)
+            self.N = config['N']['value']
+            self.attrs = {}
+            self.attrs['R'] = config['k']['value']
+            self.attrs['S'] = config['l']['value']
+            self.oos = {}
+            self.oos['R'] = config['s']['value']
+            self.oos['S'] = config['t']['value']
+            self.z = config['z']['value']
+
+        ### Validation of the configuration
         error = False
-        if self.k < self.s:
+        if self.attrs['R'] < self.oos['R']:
             print "[Error] invalid paramemter: k < s"
             error = True
-        if self.l < self.t:
+        if self.attrs['S'] < self.oos['S']:
             print "[Error] invalid paramemter: l < t"
             error = True
         if self.N < self.z:
             print "[Error] invalid paramemter: N < z"
             error = True
-
         if error:
             exit(0)
 
 
     def main(self):
-        print 'R is', self.N, 'records,', self.k, 'attributes.'
-        print 'S is', self.N, 'records,', self.l, 'attributes.'
-        print self.s, 'out of', self.k, 'in R are used for order-oriented join.'
-        print self.t, 'out of', self.l, 'in S are used for order-oriented join.'
-
         ### random attributes
-        R = randint(self.N, size=(self.N, self.k-self.s-1))
-        S = randint(self.N, size=(self.N, self.l-self.t-1))
+        R = randint(self.N, size=(self.N, self.attrs['R']-self.oos['R']-1))
+        S = randint(self.N, size=(self.N, self.attrs['S']-self.oos['S']-1))
 
         ### order-oriented attributes
-        r = self.ooAttributeGen((self.z, self.s))
-        s = self.ooAttributeGen((self.z, self.t))
+        r = self.ooAttributeGen((self.z, self.oos['R']))
+        s = self.ooAttributeGen((self.z, self.oos['S']))
         R = np.array([np.append(x, y) for x, y in zip(R, r)])
         S = np.array([np.append(x, y) for x, y in zip(S, s)])
 
@@ -53,12 +52,22 @@ class dataGen:
         R = np.array([np.append(x, y) for x, y in zip(R, r)])
         S = np.array([np.append(x, y) for x, y in zip(S, s)])
 
-        print R
-        print S
-
+        ### Save them into CSV files
         np.savetxt("R.csv", R, fmt="%d", delimiter=",")
         np.savetxt("S.csv", S, fmt="%d", delimiter=",")
 
+        ### Generate Schema
+        self.generateCreateTableStatement('R')
+        self.generateCreateTableStatement('S')
+
+
+    def generateCreateTableStatement(self, target):
+        q = 'create table %s (' % target
+        q += ', '.join(['a%d int' % i for i in range(self.attrs[target])])
+        q += ');'
+
+        with open('%s.sql' % target, 'w') as w:
+            w.write(q)
 
 
     def ooAttributeGen(self, size):

@@ -5,7 +5,10 @@
 
 ## Component
 - dataGen.py: data generator
-	- Generates two CSV files (R.csv and S.csv) corresponding with relations R and S.
+	- Generates
+		- Two CSV files (R.csv and S.csv) corresponding with relations R and S.
+			- All attributes are integer.
+		- Two SQL files (R.sql and S.sql) for create table statements.
 	- Base join keys are the last columns of R and S.
 		- Herein, equi-join is assumed.
 	- Order-oriented join keys are k-s-1 (resp. l-t-1) to k-1 (resp. l-1) columns in R (resp. S).
