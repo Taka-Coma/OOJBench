@@ -52,18 +52,25 @@ class dataGen:
         R = np.array([np.append(x, y) for x, y in zip(R, r)])
         S = np.array([np.append(x, y) for x, y in zip(S, s)])
 
+        ### expected join result
+        E = np.array([np.append(x, y) for x, y in zip(R, S)])
+
         ### Save them into CSV files
         np.savetxt("R.csv", R, fmt="%d", delimiter=",")
         np.savetxt("S.csv", S, fmt="%d", delimiter=",")
+        np.savetxt("E.csv", E, fmt="%d", delimiter=",")
 
         ### Generate Schema
-        self.generateCreateTableStatement('R')
-        self.generateCreateTableStatement('S')
+        self.generateCreateTableStatement('R', self.attrs['R'])
+        self.generateCreateTableStatement('S', self.attrs['S'])
+        self.generateCreateTableStatement('E', self.attrs['S'] + self.attrs['S'])
 
 
-    def generateCreateTableStatement(self, target):
-        q = 'create table %s (' % target
-        q += ', '.join(['a%d int' % i for i in range(self.attrs[target])])
+
+    def generateCreateTableStatement(self, target, num_of_attrs):
+        q = 'drop table if exists %s;' % target 
+        q += 'create table %s (' % target
+        q += ', '.join(['a%d int' % i for i in range(num_of_attrs)])
         q += ');'
 
         with open('%s.sql' % target, 'w') as w:
