@@ -13,6 +13,7 @@
 		- s, t: the numbers of attrobutes for order-oriented join on R and S
 	- Other attributes are filled by random values.
 - conf.json: configuration file for the generator
+	- The following is a sample.
 ```
 {
 "N": {
