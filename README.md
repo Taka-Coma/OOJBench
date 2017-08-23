@@ -7,12 +7,12 @@
 - Requirement
 	- Python
 		- Validated only for python 2.7
-	- Packages of python: json, numpy, psycopg2
+	- Packages of python: json, numpy (1.13.0), psycopg2 (2.7.1)
 	- Here assumes PostgreSQL as database.
 - Steps
 	1. Set parameters in conf.json 
 	1. python dataGen.py
-		- output: R.csv, R.sql, S.csv, S.sql, E.csv, E.sql
+		- output: R.csv, R.sql, S.csv, S.sql, E.csv, and E.sql
 	1. createdb dbname
 		- dbname is as written in conf.json.
 		- If already created, skip this step.
