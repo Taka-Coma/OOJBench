@@ -85,7 +85,7 @@
 },
 "samples": {
         "value": 10,
-				"description": "The number of key values for sample."
+        "description": "The number of key values for sample."
 },
 "dbname": "ooj"
 }
