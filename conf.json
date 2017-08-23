@@ -23,5 +23,9 @@
 	"value": 10,
 	"description": "The number tuples per join key value."
 },
+"samples": {
+	"value": 10,
+	"description": "The number of key values for sample."
+},
 "dbname": "ooj"
 }

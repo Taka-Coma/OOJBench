@@ -17,23 +17,24 @@
 		- dbname is as written in conf.json.
 		- If already created, skip this step.
 	1. python bulkLoad2Postgres.py
-		- Drop tables R, S, and E if they exist.
+		- Drop tables R, S, E and G if they exist.
 		- Create tables R, S, and E.
 		- Store R.csv, S.csv, E.csv into corresponding tables.
+		- Create table G as sample from E.
 
 
 ## Component
 - conf.json: configuration file for the generator
-	- Parameters: N, k, l, s, t, z, dbname
+	- Parameters: N, k, l, s, t, z, samples, dbname
 		- N: The number of tuples in the joined results.
 		- k: The number of attributes on R.
 		- l: The number of attributes on S.
 		- s: The number of attributes for order-oriented join on R.
 		- t: The number of attributes for order-oriented join on S.
 		- z: The number tuples per join key value.
+		- samples: The number of join key values for sample.
 		- dbname: The name of database.
-
-	- The following is a sample.
+	- An example is shown in the below section.
 - dataGen.py: data generator
 	- Generates
 		- Three CSV files (R.csv, S.csv and E.csv) corresponding with relations R, S, and E.
@@ -42,6 +43,7 @@
 - bulkLoad2Postgres.py: data loader to PostgreSQL database
 	- Execute SQL files (R.sql, S.sql and E.sql).
 	- Execute COPY command for loading CSV files into corresponding tables.
+	- Generate sample G of joined results.
 
 
 ### Specifications of tables
@@ -80,6 +82,10 @@
 "z": {
         "value": 10,
         "description": "The number tuples per join key value."
+},
+"samples": {
+        "value": 10,
+				"description": "The number of key values for sample."
 },
 "dbname": "ooj"
 }

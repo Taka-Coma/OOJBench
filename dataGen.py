@@ -72,7 +72,6 @@ class dataGen:
         q += 'create table %s (' % target
         q += ', '.join(['a%d int' % i for i in range(num_of_attrs)])
         q += ');'
-
         with open('%s.sql' % target, 'w') as w:
             w.write(q)
 
