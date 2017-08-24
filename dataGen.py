@@ -3,6 +3,7 @@
 import json
 from numpy.random import randint
 import numpy as np
+from random import sample
 
 class dataGen:
     def __init__(self):
@@ -10,21 +11,23 @@ class dataGen:
         ### Load configuration file
         with open('./conf.json', 'r') as r:
             config = json.load(r)
-            self.N = config['N']['value']
             self.attrs = {}
             self.attrs['R'] = config['k']['value']
             self.attrs['S'] = config['l']['value']
             self.oos = {}
             self.oos['R'] = config['s']['value']
             self.oos['S'] = config['t']['value']
-            self.z = config['z']['value']
+            self.vocab = config['vocab']['value']
+            self.primary = config['primary']['value']
+            self.z = self.vocab**(max(self.oos.values()))
+            self.N = self.z*self.primary
 
         ### Validation of the configuration
         error = False
-        if self.attrs['R'] < self.oos['R']:
+        if self.attrs['R'] <= self.oos['R']:
             print "[Error] invalid paramemter: k < s"
             error = True
-        if self.attrs['S'] < self.oos['S']:
+        if self.attrs['S'] <= self.oos['S']:
             print "[Error] invalid paramemter: l < t"
             error = True
         if self.N < self.z:
@@ -63,14 +66,18 @@ class dataGen:
         ### Generate Schema
         self.generateCreateTableStatement('R', self.attrs['R'])
         self.generateCreateTableStatement('S', self.attrs['S'])
-        self.generateCreateTableStatement('E', self.attrs['S'] + self.attrs['S'])
-
+        self.generateCreateTableStatement('E', (self.attrs['R'], self.attrs['S']))
 
 
     def generateCreateTableStatement(self, target, num_of_attrs):
         q = 'drop table if exists %s;' % target 
         q += 'create table %s (' % target
-        q += ', '.join(['a%d int' % i for i in range(num_of_attrs)])
+        if target == 'E':
+            q += ', '.join(['r%d int' % i for i in range(num_of_attrs[0])])
+            q += ', '
+            q += ', '.join(['s%d int' % i for i in range(num_of_attrs[1])])
+        else:
+            q += ', '.join(['%s%d int' % (target, i) for i in range(num_of_attrs)])
         q += ');'
         with open('%s.sql' % target, 'w') as w:
             w.write(q)
@@ -78,16 +85,31 @@ class dataGen:
 
     def ooAttributeGen(self, size):
         ret = []
-        tmp = [sorted(randint(self.N, size=size).tolist(),
-            key=lambda y: int(''.join(['%04d' % yy for yy in y])))
-            for j in range(int(self.N/self.z)+1)]
 
-        for tt in tmp:
-            for t in tt:
-                ret.append(t)
+        if size[1] == 1:
+            for i in range(self.primary):
+                ret.extend(sorted(sample(range(1, self.N*10), self.z)))
+        else:
+            for i in range(self.primary):
+                ret.extend(self.recursiveOOAttributeGen(0, size[1]-1))
 
         return ret[:self.N]
 
+
+    def recursiveOOAttributeGen(self, depth, goal):
+        cand = [[s] for s in sorted(sample(range(1, self.N*10), self.vocab))]
+        if depth == goal:
+            return cand
+
+        ret = []
+        for i in range(self.vocab):
+            tmp = self.recursiveOOAttributeGen(depth+1, goal)
+            for t in tmp:
+                con = cand[i][:]
+                con.extend(t)
+                ret.append(con)
+
+        return ret
 
 
 if __name__ == "__main__":

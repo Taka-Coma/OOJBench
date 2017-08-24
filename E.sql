@@ -1,1 +1,1 @@
-drop table if exists E;create table E (a0 int, a1 int, a2 int, a3 int, a4 int, a5 int, a6 int, a7 int, a8 int, a9 int, a10 int, a11 int, a12 int, a13 int, a14 int, a15 int, a16 int, a17 int, a18 int, a19 int);
+drop table if exists E;create table E (r0 int, r1 int, r2 int, r3 int, r4 int, s0 int, s1 int, s2 int, s3 int, s4 int, s5 int, s6 int, s7 int, s8 int, s9 int);

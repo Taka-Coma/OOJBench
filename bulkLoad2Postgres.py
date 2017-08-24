@@ -8,6 +8,7 @@ def main():
         data = json.load(r)
         dbname = data['dbname']
         samples = data['samples']['value']
+        attrs_r = data['k']['value']
 
     con = psql.connect('dbname=%s' % dbname)
     cur = con.cursor()
@@ -24,16 +25,16 @@ def main():
     cur.execute('''
         create table G as 
         select * From E
-        where a9 in (
+        where r%d in (
             select *
             from (
-                select distinct a9
+                select distinct r%d
                 from E
             ) a
             order by random()
-            limit %s
+            limit %d
         )
-    ''', (samples,))
+    ''' % (attrs_r-1, attrs_r-1, samples))
 
     con.commit()
     cur.close()

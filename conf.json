@@ -1,10 +1,6 @@
 {
-"N": {
-	"value": 1000,
-	"description": "The number of tuples in the joined result."
-},
 "k": {
-	"value": 10,
+	"value": 5,
 	"description": "The number of attributes on R."
 },
 "l": {
@@ -12,16 +8,20 @@
 	"description": "The number of attributes on S "
 },
 "s": {
-	"value": 1,
+	"value": 3,
 	"description": "The number of attributes for order-oriented join on R."
 },
 "t": {
 	"value": 1,
 	"description": "The number of attributes for order-oriented join on S."
 },
-"z": {
-	"value": 10,
-	"description": "The number tuples per join key value."
+"primary": {
+	"value": 100,
+	"description": "The number of values for base join key."
+},
+"vocab": {
+	"value": 2,
+	"description": "The size of vocabulary."
 },
 "samples": {
 	"value": 10,

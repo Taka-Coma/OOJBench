@@ -26,12 +26,12 @@
 ## Component
 - conf.json: configuration file for the generator
 	- Parameters: N, k, l, s, t, z, samples, dbname
-		- N: The number of tuples in the joined results.
 		- k: The number of attributes on R.
 		- l: The number of attributes on S.
 		- s: The number of attributes for order-oriented join on R.
 		- t: The number of attributes for order-oriented join on S.
-		- z: The number tuples per join key value.
+		- primary: The number tuples per join key value.
+		- vocab: The number of vocabularies for order-oriented join keys.
 		- samples: The number of join key values for sample.
 		- dbname: The name of database.
 	- An example is shown in the below section.
@@ -59,34 +59,37 @@
 ### Sample conf.json
 ```
 {
-"N": {
-        "value": 1000,
-        "description": "The number of tuples in the joined result."
-},
 "k": {
-        "value": 10,
-        "description": "The number of attributes on R."
+	"value": 5,
+	"description": "The number of attributes on R."
 },
 "l": {
-        "value": 10,
-        "description": "The number of attributes on S "
+	"value": 10,
+	"description": "The number of attributes on S "
 },
 "s": {
-        "value": 1,
-        "description": "The number of attributes for order-oriented join on R."
+	"value": 3,
+	"description": "The number of attributes for order-oriented join on R."
 },
 "t": {
-        "value": 1,
-        "description": "The number of attributes for order-oriented join on S."
+	"value": 1,
+	"description": "The number of attributes for order-oriented join on S."
 },
-"z": {
-        "value": 10,
-        "description": "The number tuples per join key value."
+"primary": {
+	"value": 100,
+	"description": "The number of values for base join key."
+},
+"vocab": {
+	"value": 2,
+	"description": "The size of vocabulary for order-oriented join keys."
 },
 "samples": {
-        "value": 10,
-        "description": "The number of key values for sample."
+	"value": 10,
+	"description": "The number of key values for sample."
 },
 "dbname": "ooj"
 }
 ```
+
+
+
