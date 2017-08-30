@@ -14,9 +14,9 @@ def main():
     cur = con.cursor()
 
     for target in ['R', 'S', 'E']:
-        with open('%s.sql' % target, 'r') as r:
+        with open('./generated/%s.sql' % target, 'r') as r:
             cur.execute(r.readline())
-        with open('%s.csv' % target, 'r') as r:
+        with open('./generated/%s.csv' % target, 'r') as r:
             cur.copy_from(r, target, sep=',')
 
     cur.execute('''

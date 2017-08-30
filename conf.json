@@ -8,7 +8,7 @@
 	"description": "The number of attributes on S "
 },
 "s": {
-	"value": 3,
+	"value": 2,
 	"description": "The number of attributes for order-oriented join on R."
 },
 "t": {

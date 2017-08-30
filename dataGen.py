@@ -59,9 +59,9 @@ class dataGen:
         E = np.array([np.append(x, y) for x, y in zip(R, S)])
 
         ### Save them into CSV files
-        np.savetxt("R.csv", R, fmt="%d", delimiter=",")
-        np.savetxt("S.csv", S, fmt="%d", delimiter=",")
-        np.savetxt("E.csv", E, fmt="%d", delimiter=",")
+        np.savetxt("./generated/R.csv", R, fmt="%d", delimiter=",")
+        np.savetxt("./generated/S.csv", S, fmt="%d", delimiter=",")
+        np.savetxt("./generated/E.csv", E, fmt="%d", delimiter=",")
 
         ### Generate Schema
         self.generateCreateTableStatement('R', self.attrs['R'])
@@ -79,7 +79,7 @@ class dataGen:
         else:
             q += ', '.join(['%s%d int' % (target, i) for i in range(num_of_attrs)])
         q += ');'
-        with open('%s.sql' % target, 'w') as w:
+        with open('./generated/%s.sql' % target, 'w') as w:
             w.write(q)
 
 
