@@ -54,9 +54,9 @@
 	- s, t: the numbers of attrobutes for order-oriented join on R and S
 - Other attributes are filled by random values.
 
-![Drawing parameters](imgs/drawing.png =250x)
+![Drawing parameters](imgs/drawing.png){:width="250px"}
 
-![Drawing parameters](imgs/drawing2.png =250x)
+![Drawing parameters](imgs/drawing2.png){:width="250px"}
 
 
 ### Sample conf.json
