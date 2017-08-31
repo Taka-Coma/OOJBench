@@ -56,6 +56,8 @@
 
 ![Drawing parameters](imgs/drawing.png)
 
+![Drawing parameters](imgs/drawing2.png)
+
 
 ### Sample conf.json
 ```
